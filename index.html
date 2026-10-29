@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MedClear – Your medicines, explained simply</title>
+<style>
+:root{--bg:#f4f8f7;--card:#fff;--ink:#12302b;--mute:#58706b;--brand:#0f8a7a;--brand-ink:#fff;--line:#d6e4e1;--hi:#b3261e;--hi-bg:#fdecea;--md:#8a5a00;--md-bg:#fff4dc;--lo:#155c3a;--lo-bg:#e4f5ec;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1a18;--card:#152623;--ink:#e6f2ef;--mute:#9bb5af;--brand:#3cc5b2;--brand-ink:#06211c;--line:#27403b;--hi:#ffb4ab;--hi-bg:#3b1a17;--md:#ffd98a;--md-bg:#3a2d10;--lo:#8fe0b4;--lo-bg:#12301f;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d1a18;--card:#152623;--ink:#e6f2ef;--mute:#9bb5af;--brand:#3cc5b2;--brand-ink:#06211c;--line:#27403b;--hi:#ffb4ab;--hi-bg:#3b1a17;--md:#ffd98a;--md-bg:#3a2d10;--lo:#8fe0b4;--lo-bg:#12301f;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:720px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:1.9rem;margin:8px 0 4px;letter-spacing:-.02em}
+h1 span{color:var(--brand)}
+.tag{color:var(--mute);margin:0 0 18px}
+.notice{background:var(--md-bg);color:var(--md);border-radius:12px;padding:10px 14px;font-size:.9rem;margin-bottom:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
+label{font-weight:600;display:block;margin-bottom:6px}
+textarea{width:100%;min-height:110px;border:1px solid var(--line);border-radius:12px;padding:12px;font:inherit;background:var(--bg);color:var(--ink);resize:vertical}
+textarea:focus{outline:2px solid var(--brand)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.chip{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:6px 12px;font-size:.85rem;cursor:pointer}
+button.go{width:100%;background:var(--brand);color:var(--brand-ink);border:0;border-radius:12px;padding:14px;font-size:1rem;font-weight:700;cursor:pointer}
+button.go:disabled{opacity:.55;cursor:wait}
+h2{font-size:1.15rem;margin:22px 0 10px}
+.med h3{margin:0 0 4px;font-size:1.05rem}
+.med p{margin:4px 0}
+.k{color:var(--mute);font-size:.8rem;text-transform:uppercase;letter-spacing:.04em;margin-top:10px;display:block}
+ul{margin:4px 0 0;padding-left:20px}
+.sched{display:grid;gap:10px}
+@media(min-width:560px){.sched{grid-template-columns:repeat(3,1fr)}}
+.slot{border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--card)}
+.slot b{display:block;margin-bottom:6px}
+.warn{border-radius:12px;padding:10px 14px;margin-bottom:8px}
+.warn.high{background:var(--hi-bg);color:var(--hi)}.warn.medium{background:var(--md-bg);color:var(--md)}.warn.low{background:var(--lo-bg);color:var(--lo)}
+.doc{border:2px solid var(--hi);border-radius:14px;padding:12px 14px}
+.err{background:var(--hi-bg);color:var(--hi);border-radius:12px;padding:12px;margin-top:12px}
+.foot{color:var(--mute);font-size:.8rem;margin-top:28px;text-align:center}
+</style>
+</head>
+<body>
+<main>
+<h1>Med<span>Clear</span></h1>
+<p class="tag">Your medicines, explained in plain language.</p>
+<div class="notice">Information only. MedClear is not a doctor or pharmacist and does not replace their advice. Never change a prescribed dose on your own.</div>
+
+<div class="card">
+<label for="meds">What medicines were you given?</label>
+<textarea id="meds" placeholder="e.g. Amoxicillin 500mg three times daily for 7 days, Paracetamol 1g when needed"></textarea>
+<div class="chips" id="chips"></div>
+<button class="go" id="go">Explain my medicines</button>
+<div id="err"></div>
+</div>
+<div id="out"></div>
+<p class="foot">Built for DSH Hacks V2 · AI x Healthcare</p>
+</main>
+<script>
+(function(){
+var EX=["Amoxicillin 500mg three times daily for 7 days, Paracetamol 1g when needed","Metformin 500mg twice daily with meals, Ibuprofen 400mg when needed, Lisinopril 10mg once daily","Artemether-lumefantrine 4 tablets twice daily for 3 days, Paracetamol 500mg"];
+var chips=document.getElementById('chips'),box=document.getElementById('meds'),go=document.getElementById('go'),out=document.getElementById('out'),err=document.getElementById('err');
+["Antibiotic + painkiller","Diabetes + blood pressure","Malaria treatment"].forEach(function(t,i){var b=document.createElement('button');b.type='button';b.className='chip';b.textContent=t;b.onclick=function(){box.value=EX[i]};chips.appendChild(b)});
+
+
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+function list(a){var u=document.createElement('ul');(a||[]).forEach(function(s){u.appendChild(el('li',null,s))});return u}
+function sec(t){return el('h2',null,t)}
+
+function render(d){
+out.textContent='';
+if(d.summary){var s=el('div','card');s.appendChild(el('p',null,d.summary));out.appendChild(s)}
+out.appendChild(sec('Your medicines'));
+(d.medicines||[]).forEach(function(m){
+var c=el('div','card med');c.appendChild(el('h3',null,m.name));
+c.appendChild(el('span','k','What it is for'));c.appendChild(el('p',null,m.purpose));
+c.appendChild(el('span','k','How to take it'));c.appendChild(el('p',null,m.how_to_take));
+if((m.side_effects||[]).length){c.appendChild(el('span','k','Common side effects'));c.appendChild(list(m.side_effects))}
+if((m.avoid||[]).length){c.appendChild(el('span','k','Avoid'));c.appendChild(list(m.avoid))}
+out.appendChild(c)});
+out.appendChild(sec('Daily schedule'));
+var g=el('div','sched');
+[['morning','Morning'],['afternoon','Afternoon'],['night','Night']].forEach(function(p){
+var sl=el('div','slot');sl.appendChild(el('b',null,p[1]));
+var items=(d.schedule||{})[p[0]]||[];
+if(items.length)sl.appendChild(list(items));else sl.appendChild(el('span','k','Nothing'));
+g.appendChild(sl)});
+out.appendChild(g);
+if((d.interactions||[]).length){out.appendChild(sec('Warnings and interactions'));
+d.interactions.forEach(function(w){var sv=['high','medium','low'].indexOf(w.severity)>-1?w.severity:'medium';out.appendChild(el('div','warn '+sv,w.text))})}
+if((d.see_doctor||[]).length){out.appendChild(sec('See a doctor or pharmacist if…'));
+var dc=el('div','doc');dc.appendChild(list(d.see_doctor));out.appendChild(dc)}
+out.scrollIntoView({behavior:'smooth'})}
+
+go.onclick=async function(){
+err.textContent='';
+var v=box.value.trim();
+if(!v){err.appendChild(el('div','err','Please type at least one medicine first.'));return}
+go.disabled=true;go.textContent='Reading your list…';
+try{
+var r=await fetch('/api/explain',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({medicines:v})});
+if(!r.ok){throw {code:r.status===429?'rate_limited':'bad'}}
+var d=await r.json();
+if(!d||!d.medicines)throw {code:'bad'};
+render(d);
+}catch(e){
+var m=e&&e.code==='unavailable'?'The AI is not available in this view. Open the page in claude.ai and allow it when asked.':e&&e.code==='not_granted'?'You chose not to allow the AI. MedClear needs it to explain medicines.':e&&e.code==='rate_limited'?'Too many requests. Please wait a moment and try again.':'Something went wrong reading that. Try rewording your list and try again.';
+err.appendChild(el('div','err',m))}
+go.disabled=false;go.textContent='Explain my medicines'};
+})();
+</script>
+</body>
+</html>
