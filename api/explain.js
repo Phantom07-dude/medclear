@@ -2,7 +2,7 @@ const SYSTEM = `You are MedClear, a careful medication-education assistant for t
 
 export default async function handler(req, res) {
   const key = process.env.GEMINI_API_KEY;
-  const model = process.env.GEMINI_MODEL || 'gemini-2.5-flash-lite';
+  const model = 'gemini-3.5-flash-lite';
   const debug = req.method === 'GET' && req.query && req.query.test;
   if (req.method !== 'POST' && !debug) return res.status(405).json({ error: 'POST only' });
   if (!key) return res.status(500).json({ error: 'No GEMINI_API_KEY found on server' });
