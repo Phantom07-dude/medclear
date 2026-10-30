@@ -4,6 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>MedClear – Your medicines, explained simply</title>
+<meta name="description" content="MedClear explains your medicines in plain language: what each is for, a daily schedule, interaction warnings and when to see a doctor.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="MedClear – Your medicines, explained simply">
+<meta property="og:description" content="Type in what you were prescribed and get a plain-language explanation, a daily schedule and safety warnings.">
+<meta property="og:image" content="https://medclear-bay.vercel.app/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <style>
 :root{--bg:#f4f8f7;--card:#fff;--ink:#12302b;--mute:#58706b;--brand:#0f8a7a;--brand-ink:#fff;--line:#d6e4e1;--hi:#b3261e;--hi-bg:#fdecea;--md:#8a5a00;--md-bg:#fff4dc;--lo:#155c3a;--lo-bg:#e4f5ec;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1a18;--card:#152623;--ink:#e6f2ef;--mute:#9bb5af;--brand:#3cc5b2;--brand-ink:#06211c;--line:#27403b;--hi:#ffb4ab;--hi-bg:#3b1a17;--md:#ffd98a;--md-bg:#3a2d10;--lo:#8fe0b4;--lo-bg:#12301f;color-scheme:dark}}
@@ -62,7 +70,6 @@ var EX=["Amoxicillin 500mg three times daily for 7 days, Paracetamol 1g when nee
 var chips=document.getElementById('chips'),box=document.getElementById('meds'),go=document.getElementById('go'),out=document.getElementById('out'),err=document.getElementById('err');
 ["Antibiotic + painkiller","Diabetes + blood pressure","Malaria treatment"].forEach(function(t,i){var b=document.createElement('button');b.type='button';b.className='chip';b.textContent=t;b.onclick=function(){box.value=EX[i]};chips.appendChild(b)});
 
-
 function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
 function list(a){var u=document.createElement('ul');(a||[]).forEach(function(s){u.appendChild(el('li',null,s))});return u}
 function sec(t){return el('h2',null,t)}
@@ -104,7 +111,7 @@ var d=await r.json();
 if(!d||!d.medicines)throw {code:'bad'};
 render(d);
 }catch(e){
-var m=e&&e.code==='unavailable'?'The AI is not available in this view. Open the page in claude.ai and allow it when asked.':e&&e.code==='not_granted'?'You chose not to allow the AI. MedClear needs it to explain medicines.':e&&e.code==='rate_limited'?'Too many requests. Please wait a moment and try again.':'Something went wrong reading that. Try rewording your list and try again.';
+var m=e&&e.code==='rate_limited'?'Too many requests. Please wait a moment and try again.':'Something went wrong reading that. Try rewording your list and try again.';
 err.appendChild(el('div','err',m))}
 go.disabled=false;go.textContent='Explain my medicines'};
 })();
