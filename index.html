@@ -12,98 +12,177 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f4f8f7;--card:#fff;--ink:#12302b;--mute:#58706b;--brand:#0f8a7a;--brand-ink:#fff;--line:#d6e4e1;--hi:#b3261e;--hi-bg:#fdecea;--md:#8a5a00;--md-bg:#fff4dc;--lo:#155c3a;--lo-bg:#e4f5ec;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1a18;--card:#152623;--ink:#e6f2ef;--mute:#9bb5af;--brand:#3cc5b2;--brand-ink:#06211c;--line:#27403b;--hi:#ffb4ab;--hi-bg:#3b1a17;--md:#ffd98a;--md-bg:#3a2d10;--lo:#8fe0b4;--lo-bg:#12301f;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0d1a18;--card:#152623;--ink:#e6f2ef;--mute:#9bb5af;--brand:#3cc5b2;--brand-ink:#06211c;--line:#27403b;--hi:#ffb4ab;--hi-bg:#3b1a17;--md:#ffd98a;--md-bg:#3a2d10;--lo:#8fe0b4;--lo-bg:#12301f;color-scheme:dark}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
+:root{
+--paper:#f6f8f8;--surface:#ffffff;--ink:#0e2a2f;--mute:#546b70;--line:#d9e3e4;
+--teal:#0b6b63;--teal-ink:#ffffff;--teal-soft:#e2f2ef;
+--amber:#c9741a;--amber-soft:#fff1de;
+--red:#b3261e;--red-soft:#fdeceb;--green:#17673f;--green-soft:#e3f4ea;
+--r-lg:20px;--r-md:12px;
+font-family:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root{
+--paper:#0b1819;--surface:#112325;--ink:#e8f3f2;--mute:#9db7b9;--line:#24403f;
+--teal:#4fd1c0;--teal-ink:#04211d;--teal-soft:#123532;
+--amber:#f0a455;--amber-soft:#35260f;
+--red:#ffb4ab;--red-soft:#3a1a18;--green:#8fe0b4;--green-soft:#12301f;color-scheme:dark}}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-main{max-width:720px;margin:0 auto;padding:20px 16px 48px}
-h1{font-size:1.9rem;margin:8px 0 4px;letter-spacing:-.02em}
-h1 span{color:var(--brand)}
-.tag{color:var(--mute);margin:0 0 18px}
-.notice{background:var(--md-bg);color:var(--md);border-radius:12px;padding:10px 14px;font-size:.9rem;margin-bottom:16px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
-label{font-weight:600;display:block;margin-bottom:6px}
-textarea{width:100%;min-height:110px;border:1px solid var(--line);border-radius:12px;padding:12px;font:inherit;background:var(--bg);color:var(--ink);resize:vertical}
-textarea:focus{outline:2px solid var(--brand)}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
-.chip{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:6px 12px;font-size:.85rem;cursor:pointer}
-button.go{width:100%;background:var(--brand);color:var(--brand-ink);border:0;border-radius:12px;padding:14px;font-size:1rem;font-weight:700;cursor:pointer}
-button.go:disabled{opacity:.55;cursor:wait}
-h2{font-size:1.15rem;margin:22px 0 10px}
-.med h3{margin:0 0 4px;font-size:1.05rem}
-.med p{margin:4px 0}
-.k{color:var(--mute);font-size:.8rem;text-transform:uppercase;letter-spacing:.04em;margin-top:10px;display:block}
-ul{margin:4px 0 0;padding-left:20px}
-.sched{display:grid;gap:10px}
-@media(min-width:560px){.sched{grid-template-columns:repeat(3,1fr)}}
-.slot{border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--card)}
-.slot b{display:block;margin-bottom:6px}
-.warn{border-radius:12px;padding:10px 14px;margin-bottom:8px}
-.warn.high{background:var(--hi-bg);color:var(--hi)}.warn.medium{background:var(--md-bg);color:var(--md)}.warn.low{background:var(--lo-bg);color:var(--lo)}
-.doc{border:2px solid var(--hi);border-radius:14px;padding:12px 14px}
-.err{background:var(--hi-bg);color:var(--hi);border-radius:12px;padding:12px;margin-top:12px}
-.foot{color:var(--mute);font-size:.8rem;margin-top:28px;text-align:center}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--paper);color:var(--ink);font-size:16px;line-height:1.55;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
+.wrap{max-width:760px;margin:0 auto;padding:18px 18px 56px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.15rem;letter-spacing:-.01em}
+.brand svg{width:34px;height:34px;flex:none}
+h1{font-size:clamp(2rem,7.5vw,3.1rem);line-height:1.08;letter-spacing:-.03em;font-weight:800;margin:34px 0 12px;max-width:16ch}
+.greet{margin:30px 0 0;color:var(--teal);font-weight:700;font-size:1.05rem}
+.greet+h1{margin-top:6px}
+.dr{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--ink);background:var(--teal-soft);border:1.5px solid var(--teal);border-radius:var(--r-lg);padding:14px 16px;margin:0 0 18px}
+.dr .av{width:44px;height:44px;border-radius:50%;background:var(--teal);color:var(--teal-ink);display:grid;place-items:center;font-weight:800;flex:none}
+.dr b{display:block}.dr span{color:var(--mute);font-size:.88rem}.dr .go2{margin-left:auto;font-size:1.3rem;color:var(--teal)}
+.lead{color:var(--mute);font-size:1.05rem;max-width:46ch;margin:0 0 26px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px}
+label{display:block;font-weight:700;margin-bottom:4px}
+.hint{color:var(--mute);font-size:.88rem;margin:0 0 10px}
+textarea{width:100%;min-height:118px;border:1.5px solid var(--line);border-radius:var(--r-md);padding:13px 14px;font:inherit;background:var(--paper);color:var(--ink);resize:vertical}
+textarea:focus-visible,button:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.try{margin:12px 0 4px;font-size:.88rem;color:var(--mute)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 16px}
+.chip{border:1.5px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:8px 14px;font:inherit;font-size:.9rem;font-weight:600;cursor:pointer}
+.chip:hover{border-color:var(--teal);background:var(--teal-soft)}
+button.go{width:100%;background:var(--teal);color:var(--teal-ink);border:0;border-radius:var(--r-md);padding:15px;font:inherit;font-size:1.02rem;font-weight:800;cursor:pointer;display:flex;gap:10px;align-items:center;justify-content:center}
+button.go:disabled{opacity:.7;cursor:wait}
+.spin{width:16px;height:16px;border:2.5px solid currentColor;border-right-color:transparent;border-radius:50%;animation:s .7s linear infinite;display:none}
+button.go:disabled .spin{display:inline-block}
+@keyframes s{to{transform:rotate(360deg)}}
+.safe{margin:14px 2px 0;color:var(--mute);font-size:.84rem}
+.err{background:var(--red-soft);color:var(--red);border-radius:var(--r-md);padding:12px 14px;margin-top:14px;font-weight:600;font-size:.94rem}
+#out{margin-top:34px}
+.sum{border-left:5px solid var(--teal);background:var(--teal-soft);border-radius:0 var(--r-md) var(--r-md) 0;padding:14px 16px;font-weight:500}
+h2{font-size:1.3rem;letter-spacing:-.02em;margin:38px 0 14px;font-weight:800}
+.meds{display:grid;gap:12px}
+.med{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--teal);border-radius:var(--r-md);padding:15px 16px}
+.med h3{margin:0 0 8px;font-size:1.1rem;letter-spacing:-.01em}
+.row{margin-top:10px}
+.row b{display:block;font-size:.88rem;color:var(--mute);font-weight:700}
+.row p{margin:2px 0 0}
+ul{margin:4px 0 0;padding-left:19px}
+li{margin:2px 0}
+.box{display:grid;gap:0;border:2px solid var(--ink);border-radius:var(--r-lg);overflow:hidden;background:var(--surface)}
+.cell{padding:14px 16px;border-top:1.5px dashed var(--line)}
+.cell:first-child{border-top:0}
+.cell h4{margin:0 0 6px;font-size:1rem;display:flex;align-items:center;gap:8px}
+.cell h4 i{font-style:normal;font-size:1.25rem}
+.cell.empty{color:var(--mute)}
+@media(min-width:620px){.box{grid-template-columns:repeat(3,1fr)}.cell{border-top:0;border-left:1.5px dashed var(--line)}.cell:first-child{border-left:0}}
+.warn{display:flex;gap:12px;border-radius:var(--r-md);padding:12px 14px;margin-bottom:10px}
+.warn b{flex:none;font-size:.85rem;border-radius:999px;padding:2px 10px;height:fit-content;background:currentColor}
+.warn b span{color:var(--surface);mix-blend-mode:normal}
+.warn p{margin:0;color:var(--ink)}
+.warn.high{background:var(--red-soft);color:var(--red)}
+.warn.medium{background:var(--amber-soft);color:var(--amber)}
+.warn.low{background:var(--green-soft);color:var(--green)}
+.doc{border:2px solid var(--red);border-radius:var(--r-lg);padding:15px 17px;background:var(--surface)}
+.doc h2{margin:0 0 6px;font-size:1.1rem;color:var(--red)}
+.again{margin-top:26px;display:flex;gap:10px;flex-wrap:wrap}
+.again button{border:1.5px solid var(--ink);background:transparent;color:var(--ink);border-radius:var(--r-md);padding:11px 16px;font:inherit;font-weight:700;cursor:pointer}
+footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);color:var(--mute);font-size:.84rem}
+@media print{.panel,.again,.lead,h1,.brand+*{display:none}body{background:#fff;color:#000}}
+@media (prefers-reduced-motion:reduce){.spin{animation-duration:2s}}
 </style>
 </head>
 <body>
-<main>
-<h1>Med<span>Clear</span></h1>
-<p class="tag">Your medicines, explained in plain language.</p>
-<div class="notice">Information only. MedClear is not a doctor or pharmacist and does not replace their advice. Never change a prescribed dose on your own.</div>
-
-<div class="card">
-<label for="meds">What medicines were you given?</label>
-<textarea id="meds" placeholder="e.g. Amoxicillin 500mg three times daily for 7 days, Paracetamol 1g when needed"></textarea>
-<div class="chips" id="chips"></div>
-<button class="go" id="go">Explain my medicines</button>
-<div id="err"></div>
+<div class="wrap">
+<div class="brand" aria-label="MedClear">
+<svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="11" fill="#0b6b63"/><g transform="rotate(-40 20 20)"><rect x="6" y="13" width="28" height="14" rx="7" fill="#fff"/><path d="M20 13h7a7 7 0 0 1 0 14h-7z" fill="#f0a455"/></g></svg>
+MedClear
 </div>
-<div id="out"></div>
-<p class="foot">Built for DSH Hacks V2 · AI x Healthcare</p>
-</main>
+
+<p class="greet" id="greet"></p>
+<h1>Know exactly what you are taking.</h1>
+<p class="lead">Type in your medicines. Get a plain-language explanation, a daily schedule and the warnings that matter.</p>
+
+<a class="dr" href="/chat.html"><div class="av">G</div><div><b>Talk to Geraldine, your AI health guide</b><span>Not feeling well? Describe it and she asks the right questions.</span></div><div class="go2">→</div></a>
+
+<div class="panel">
+<label for="meds">Your medicines</label>
+<p class="hint">Include the name, strength and how often you take each one.</p>
+<textarea id="meds" placeholder="Amoxicillin 500mg three times daily for 7 days, Paracetamol 1g when needed"></textarea>
+<p class="try">Not sure what to type? Try an example:</p>
+<div class="chips" id="chips"></div>
+<button class="go" id="go" type="button"><span class="spin"></span><span id="gotext">Explain my medicines</span></button>
+<p class="safe">MedClear gives information only. It does not diagnose or change doses, and it does not replace your doctor or pharmacist.</p>
+<div id="err" role="alert"></div>
+</div>
+
+<div id="out" aria-live="polite"></div>
+
+<footer>Built for DSH Hacks V2 (AI x Healthcare). Always follow the instructions your doctor or pharmacist gave you.</footer>
+</div>
+
 <script>
 (function(){
+var hr=new Date().getHours();
+var hi=hr>=5&&hr<12?'Good morning':hr>=12&&hr<17?'Good afternoon':'Good evening';
+document.getElementById('greet').textContent=hi+' 👋';
 var EX=["Amoxicillin 500mg three times daily for 7 days, Paracetamol 1g when needed","Metformin 500mg twice daily with meals, Ibuprofen 400mg when needed, Lisinopril 10mg once daily","Artemether-lumefantrine 4 tablets twice daily for 3 days, Paracetamol 500mg"];
-var chips=document.getElementById('chips'),box=document.getElementById('meds'),go=document.getElementById('go'),out=document.getElementById('out'),err=document.getElementById('err');
-["Antibiotic + painkiller","Diabetes + blood pressure","Malaria treatment"].forEach(function(t,i){var b=document.createElement('button');b.type='button';b.className='chip';b.textContent=t;b.onclick=function(){box.value=EX[i]};chips.appendChild(b)});
+var chips=document.getElementById('chips'),box=document.getElementById('meds'),go=document.getElementById('go'),gotext=document.getElementById('gotext'),out=document.getElementById('out'),err=document.getElementById('err');
+["Antibiotic and painkiller","Diabetes and blood pressure","Malaria treatment"].forEach(function(t,i){var b=document.createElement('button');b.type='button';b.className='chip';b.textContent=t;b.onclick=function(){box.value=EX[i];box.focus()};chips.appendChild(b)});
 
 function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
 function list(a){var u=document.createElement('ul');(a||[]).forEach(function(s){u.appendChild(el('li',null,s))});return u}
-function sec(t){return el('h2',null,t)}
+function row(label,content){var r=el('div','row');r.appendChild(el('b',null,label));r.appendChild(content);return r}
 
 function render(d){
 out.textContent='';
-if(d.summary){var s=el('div','card');s.appendChild(el('p',null,d.summary));out.appendChild(s)}
-out.appendChild(sec('Your medicines'));
+if(d.summary)out.appendChild(el('div','sum',d.summary));
+out.appendChild(el('h2',null,'What each medicine does'));
+var ms=el('div','meds');
 (d.medicines||[]).forEach(function(m){
-var c=el('div','card med');c.appendChild(el('h3',null,m.name));
-c.appendChild(el('span','k','What it is for'));c.appendChild(el('p',null,m.purpose));
-c.appendChild(el('span','k','How to take it'));c.appendChild(el('p',null,m.how_to_take));
-if((m.side_effects||[]).length){c.appendChild(el('span','k','Common side effects'));c.appendChild(list(m.side_effects))}
-if((m.avoid||[]).length){c.appendChild(el('span','k','Avoid'));c.appendChild(list(m.avoid))}
-out.appendChild(c)});
-out.appendChild(sec('Daily schedule'));
-var g=el('div','sched');
-[['morning','Morning'],['afternoon','Afternoon'],['night','Night']].forEach(function(p){
-var sl=el('div','slot');sl.appendChild(el('b',null,p[1]));
+var c=el('div','med');c.appendChild(el('h3',null,m.name));
+c.appendChild(row('What it is for',el('p',null,m.purpose)));
+c.appendChild(row('How to take it',el('p',null,m.how_to_take)));
+if((m.side_effects||[]).length)c.appendChild(row('Common side effects',list(m.side_effects)));
+if((m.avoid||[]).length)c.appendChild(row('Avoid',list(m.avoid)));
+ms.appendChild(c)});
+out.appendChild(ms);
+
+out.appendChild(el('h2',null,'Your day at a glance'));
+var bx=el('div','box');
+[['morning','Morning','☀️'],['afternoon','Afternoon','🌤️'],['night','Night','🌙']].forEach(function(p){
 var items=(d.schedule||{})[p[0]]||[];
-if(items.length)sl.appendChild(list(items));else sl.appendChild(el('span','k','Nothing'));
-g.appendChild(sl)});
-out.appendChild(g);
-if((d.interactions||[]).length){out.appendChild(sec('Warnings and interactions'));
-d.interactions.forEach(function(w){var sv=['high','medium','low'].indexOf(w.severity)>-1?w.severity:'medium';out.appendChild(el('div','warn '+sv,w.text))})}
-if((d.see_doctor||[]).length){out.appendChild(sec('See a doctor or pharmacist if…'));
-var dc=el('div','doc');dc.appendChild(list(d.see_doctor));out.appendChild(dc)}
+var c=el('div','cell'+(items.length?'':' empty'));
+var h=el('h4');h.appendChild(el('i',null,p[2]));h.appendChild(document.createTextNode(p[1]));c.appendChild(h);
+if(items.length)c.appendChild(list(items));else c.appendChild(el('span',null,'Nothing to take'));
+bx.appendChild(c)});
+out.appendChild(bx);
+
+if((d.interactions||[]).length){
+out.appendChild(el('h2',null,'Warnings and interactions'));
+var names={high:'Important',medium:'Be careful',low:'Good to know'};
+d.interactions.forEach(function(w){
+var sv=names[w.severity]?w.severity:'medium';
+var x=el('div','warn '+sv);var tag=el('b');tag.appendChild(el('span',null,names[sv]));x.appendChild(tag);
+x.appendChild(el('p',null,w.text));out.appendChild(x)})}
+
+if((d.see_doctor||[]).length){
+var dc=el('div','doc');dc.style.marginTop='30px';
+dc.appendChild(el('h2',null,'Get help from a doctor or pharmacist if:'));
+dc.appendChild(list(d.see_doctor));out.appendChild(dc)}
+
+var ag=el('div','again');
+var pb=el('button',null,'Save or print this plan');pb.type='button';pb.onclick=function(){window.print()};
+var nb=el('button',null,'Check other medicines');nb.type='button';nb.onclick=function(){window.scrollTo({top:0,behavior:'smooth'});box.focus()};
+ag.appendChild(pb);ag.appendChild(nb);out.appendChild(ag);
 out.scrollIntoView({behavior:'smooth'})}
 
 go.onclick=async function(){
 err.textContent='';
 var v=box.value.trim();
-if(!v){err.appendChild(el('div','err','Please type at least one medicine first.'));return}
-go.disabled=true;go.textContent='Reading your list…';
+if(!v){err.appendChild(el('div','err','Type at least one medicine, with its strength and how often you take it.'));return}
+go.disabled=true;gotext.textContent='Reading your list…';
 try{
 var r=await fetch('/api/explain',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({medicines:v})});
 if(!r.ok){throw {code:r.status===429?'rate_limited':'bad'}}
@@ -111,9 +190,9 @@ var d=await r.json();
 if(!d||!d.medicines)throw {code:'bad'};
 render(d);
 }catch(e){
-var m=e&&e.code==='rate_limited'?'Too many requests. Please wait a moment and try again.':'Something went wrong reading that. Try rewording your list and try again.';
+var m=e&&e.code==='rate_limited'?'Too many requests right now. Wait a minute, then try again.':'We could not read that list. Check the medicine names and try again.';
 err.appendChild(el('div','err',m))}
-go.disabled=false;go.textContent='Explain my medicines'};
+go.disabled=false;gotext.textContent='Explain my medicines'};
 })();
 </script>
 </body>
